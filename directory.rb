@@ -1,17 +1,21 @@
-# All students added into an Array
-students = [
-    {name: "Dr. Hannibal Lecter", cohort: :january},
-    {name: "Darth Vader", cohort: :january},
-    {name: "Nurse Ratched", cohort: :january},
-    {name: "Michael Corleone", cohort: :january},
-    {name: "Alex DeLarge", cohort: :january},
-    {name: "The Wicked Witch of the West", cohort: :january},
-    {name: "Terminator", cohort: :january},
-    {name: "Freddy Krueger", cohort: :january},
-    {name: "The Joker", cohort: :january},
-    {name: "Joffrey Baratheon", cohort: :january},
-    {name: "Norman Bates", cohort: :january}
-    ]
+def input_students
+  puts "Please enter the names of the students"
+  puts "To finish, hit return twice"
+  # Create an empty array
+  students = []
+  # Get the first name
+  name = gets.chomp
+  # if name is not left empty, repeat the following code:
+  while !name.empty? do
+      # add the given student hash to the array
+    students << {name: name, cohort: :january}
+    puts "We now have #{students.count} students"
+    # get another name from the user
+    name = gets.chomp
+  end    
+  # return the array of students
+  students
+end
 
 def print_header
  puts "The students of Villian Academy"
@@ -20,7 +24,7 @@ end
 
 def print(students)
   students.each do |student|
-  puts "#{student[:name]} (#{student[:cohort]} cohort)"
+  puts "#{student[:name]} (#{student[:cohort].capitalize} cohort)"
   end
 end
 
@@ -28,6 +32,7 @@ def print_footer(names)
   puts "Overall we have #{names.count} great students"
 end  
 
+students = input_students
 print_header
 print(students)
 print_footer(students)
