@@ -1,7 +1,6 @@
+ @students = []
 def input_students
-  students = []
   puts "To finish, hit return twice"
-  
   # if name is not left empty, repeat the following code:
   while true do
     puts "Please enter the students name"
@@ -24,15 +23,13 @@ def input_students
     end
     cohort.to_sym
     # add the given student hash to the array
-    students << {name: name, age: age, cohort: cohort}
-    if students.count == 1
+    @students << {name: name, age: age, cohort: cohort}
+    if @students.count == 1
       puts "We now have 1 student"
     else  
-      puts "We now have #{students.count} students"
+      puts "We now have #{@students.count} students"
     end
   end    
-  # return the array of students
-  students
 end
 
 def print_header
@@ -40,26 +37,55 @@ def print_header
  puts "-----------".center(27)
 end
 
-def print(students)
+def print_students_list
   count = 0
-  while count < students.length do
-    puts "#{students[count][:name]}, aged #{students[count][:age]} (#{students[count][:cohort].capitalize} cohort)"
+  while count < @students.length do
+    puts "#{@students[count][:name]}, aged #{@students[count][:age]} (#{@students[count][:cohort].capitalize} cohort)"
     count += 1
   end
 end
 
-def print_footer(names)
-  if names.count == 1
+def print_footer
+  if @students.count == 1
     puts "Overall we have 1 great student"
-  elsif names.empty?
+  elsif @students.empty?
     puts "We are yet to take on any students"
   else  
-    puts "Overall we have #{names.count} great students"
+    puts "Overall we have #{@students.count} great students"
   end
+  puts "-----------".center(27)
 end 
 
+def interactive_menu
+  loop do
+    print_menu
+    process(gets.chomp)
+  end  
+end  
 
-students = input_students
-print_header
-print(students)
-print_footer(students)
+def print_menu
+  puts "1. Input the students"
+  puts "2. View a list of the students"
+  puts "9. Exit"
+end
+
+def show_students
+  print_header
+  print_students_list
+  print_footer
+end 
+
+def process(selection)
+  case selection
+      when "1"
+        input_students
+      when "2"
+        show_students
+      when "9"
+        exit
+      else
+        puts "I don't know what you meant, please try again"
+  end
+end
+
+interactive_menu
