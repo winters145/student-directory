@@ -5,18 +5,19 @@ def input_students
   while true do
     puts "Please enter the students name"
     # Get the first name
-    name = gets.strip
+    name = STDIN.gets.strip
     if name.empty?
       break
     end 
     
     puts "Please enter the students age"
-    age = gets.strip
+    age = STDIN.gets.strip
+      age = "N/A" if age.empty?
     puts "Please enter their cohort"
-    cohort = gets.strip.downcase
+    cohort = STDIN.gets.strip.downcase
       until cohort == "january" || cohort =="february" || cohort =="march" || cohort =="april" || cohort =="may" || cohort =="june" || cohort =="july" || cohort =="august" || cohort =="september" || cohort =="october" || cohort =="november" || cohort =="december" || cohort ==""
         puts "Cohort invalid; please enter a month and check that the spelling is correct"
-        cohort = gets.strip.downcase
+        cohort = STDIN.gets.strip.downcase
       end
     if cohort == ""
       cohort = :january
@@ -59,7 +60,7 @@ end
 def interactive_menu
   loop do
     print_menu
-    process(gets.chomp)
+    process(STDIN.gets.chomp)
   end  
 end  
 
@@ -104,8 +105,8 @@ def save_students
   file.close
 end  
 
-def load_students
-  file = File.open("students.csv", "r")
+def load_students(filename = "students.csv")
+  file = File.open(filename, "r")
   file.readlines.each do |line|
     name, cohort = line.chomp.split(",")
     @students << {name: name, cohort: cohort.to_sym}
@@ -113,4 +114,17 @@ def load_students
   file.close
 end
 
+def try_load_students
+  filename = ARGV.first # the first argument from the commandline
+  return if filename.nil? # gets us out of the method if the file name isn't given
+  if File.exists?(filename) # if the filename given exists
+    load_students(filename)
+      puts "Loaded #{@students.count} from #{filename}"
+  else
+    puts "Sorry, #{filename} doesn't exist."
+    exit #quits the program
+  end 
+end  
+
+try_load_students
 interactive_menu
