@@ -1,30 +1,27 @@
- @students = []
+@students = []
+
 def input_students
   puts "To finish, hit return twice"
   # if name is not left empty, repeat the following code:
   while true do
     puts "Please enter the students name"
     # Get the first name
-    name = STDIN.gets.strip
-    if name.empty?
+    @name = STDIN.gets.strip
+    if @name.empty?
       break
     end 
     
-    puts "Please enter the students age"
-    age = STDIN.gets.strip
-      age = "N/A" if age.empty?
     puts "Please enter their cohort"
-    cohort = STDIN.gets.strip.downcase
-      until cohort == "january" || cohort =="february" || cohort =="march" || cohort =="april" || cohort =="may" || cohort =="june" || cohort =="july" || cohort =="august" || cohort =="september" || cohort =="october" || cohort =="november" || cohort =="december" || cohort ==""
+    @cohort = STDIN.gets.strip.downcase
+      until @cohort == "january" || @cohort =="february" || @cohort =="march" || @cohort =="april" || @cohort =="may" || @cohort =="june" || @cohort =="july" || @cohort =="august" || @cohort =="september" || @cohort =="october" || @cohort =="november" || @cohort =="december" || @cohort ==""
         puts "Cohort invalid; please enter a month and check that the spelling is correct"
-        cohort = STDIN.gets.strip.downcase
+        @cohort = STDIN.gets.strip.downcase
       end
-    if cohort == ""
-      cohort = :january
+    if @cohort == ""
+      @cohort = :january
     end
-    cohort.to_sym
     # add the given student hash to the array
-    @students << {name: name, age: age, cohort: cohort}
+    add_students
     if @students.count == 1
       puts "We now have 1 student"
     else  
@@ -41,7 +38,7 @@ end
 def print_students_list
   count = 0
   while count < @students.length do
-    puts "#{@students[count][:name]}, aged #{@students[count][:age]} (#{@students[count][:cohort].capitalize} cohort)"
+    puts "#{@students[count][:name]} (#{@students[count][:cohort].capitalize} cohort)"
     count += 1
   end
 end
@@ -108,8 +105,8 @@ end
 def load_students(filename = "students.csv")
   file = File.open(filename, "r")
   file.readlines.each do |line|
-    name, cohort = line.chomp.split(",")
-    @students << {name: name, cohort: cohort.to_sym}
+    @name, @cohort = line.chomp.split(",")
+    add_students
   end 
   file.close
 end
@@ -124,6 +121,10 @@ def try_load_students
     puts "Sorry, #{filename} doesn't exist."
     exit #quits the program
   end 
+end  
+
+def add_students
+  @students << {name: @name, cohort: @cohort.to_sym}
 end  
 
 try_load_students
