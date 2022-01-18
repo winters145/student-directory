@@ -16,7 +16,7 @@ def input_students
     puts "Please enter their cohort"
     cohort = gets.chomp.downcase
       until cohort == "january" || cohort =="february" || cohort =="march" || cohort =="april" || cohort =="may" || cohort =="june" || cohort =="july" || cohort =="august" || cohort =="september" || cohort =="october" || cohort =="november" || cohort =="december" || cohort ==""
-        puts "Cohort invalid; please enter a month and check the spelling is correct"
+        puts "Cohort invalid; please enter a month and check that the spelling is correct"
         cohort = gets.chomp.downcase
       end
     if cohort == ""
@@ -25,8 +25,11 @@ def input_students
     cohort.to_sym
     # add the given student hash to the array
     students << {name: name, age: age, cohort: cohort}
-    puts "We now have #{students.count} students"
-    # get another name from the user
+    if students.count == 1
+      puts "We now have 1 student"
+    else  
+      puts "We now have #{students.count} students"
+    end
   end    
   # return the array of students
   students
@@ -46,8 +49,13 @@ def print(students)
 end
 
 def print_footer(names)
-  puts "Overall we have #{names.count} great students"
-end  
+  if names.count == 1
+    puts "Overall we have 1 great student"
+  else  
+    puts "Overall we have #{names.count} great students"
+  end
+end 
+
 
 students = input_students
 print_header
