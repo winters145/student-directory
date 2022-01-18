@@ -10,10 +10,21 @@ def input_students
     if name.empty?
       break
     end 
+    
     puts "Please enter the students age"
     age = gets.chomp
+    puts "Please enter their cohort"
+    cohort = gets.chomp.downcase
+      until cohort == "january" || cohort =="february" || cohort =="march" || cohort =="april" || cohort =="may" || cohort =="june" || cohort =="july" || cohort =="august" || cohort =="september" || cohort =="october" || cohort =="november" || cohort =="december" || cohort ==""
+        puts "Cohort invalid; please enter a month and check the spelling is correct"
+        cohort = gets.chomp.downcase
+      end
+    if cohort == ""
+      cohort = :january
+    end
+    cohort.to_sym
     # add the given student hash to the array
-    students << {name: name, age: age, cohort: :january}
+    students << {name: name, age: age, cohort: cohort}
     puts "We now have #{students.count} students"
     # get another name from the user
   end    
@@ -23,7 +34,7 @@ end
 
 def print_header
  puts "The students of Villian Academy"
- puts "-----------"
+ puts "-----------".center(27)
 end
 
 def print(students)
