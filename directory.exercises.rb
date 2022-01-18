@@ -6,18 +6,18 @@ def input_students
   while true do
     puts "Please enter the students name"
     # Get the first name
-    name = gets.chomp
+    name = gets.strip
     if name.empty?
       break
     end 
     
     puts "Please enter the students age"
-    age = gets.chomp
+    age = gets.strip
     puts "Please enter their cohort"
-    cohort = gets.chomp.downcase
+    cohort = gets.strip.downcase
       until cohort == "january" || cohort =="february" || cohort =="march" || cohort =="april" || cohort =="may" || cohort =="june" || cohort =="july" || cohort =="august" || cohort =="september" || cohort =="october" || cohort =="november" || cohort =="december" || cohort ==""
         puts "Cohort invalid; please enter a month and check that the spelling is correct"
-        cohort = gets.chomp.downcase
+        cohort = gets.strip.downcase
       end
     if cohort == ""
       cohort = :january
