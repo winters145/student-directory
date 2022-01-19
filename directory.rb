@@ -5,22 +5,16 @@ def input_students
   # if name is not left empty, repeat the following code:
   while true do
     puts "Please enter the students name"
-    # Get the first name
     @name = STDIN.gets.strip
     if @name.empty?
       break
     end 
-    
     puts "Please enter their cohort"
     @cohort = STDIN.gets.strip.downcase
-      until @cohort == "january" || @cohort =="february" || @cohort =="march" || @cohort =="april" || @cohort =="may" || @cohort =="june" || @cohort =="july" || @cohort =="august" || @cohort =="september" || @cohort =="october" || @cohort =="november" || @cohort =="december" || @cohort ==""
-        puts "Cohort invalid; please enter a month and check that the spelling is correct"
-        @cohort = STDIN.gets.strip.downcase
-      end
+    cohort_not_valid # Makes sure the given cohort is valid
     if @cohort == ""
       @cohort = :january
     end
-    # add the given student hash to the array
     add_students
     if @students.count == 1
       puts "We now have 1 student"
@@ -53,6 +47,13 @@ def print_footer
   end
   puts "-----------".center(27)
 end 
+
+def cohort_not_valid
+  until @cohort == "january" || @cohort =="february" || @cohort =="march" || @cohort =="april" || @cohort =="may" || @cohort =="june" || @cohort =="july" || @cohort =="august" || @cohort =="september" || @cohort =="october" || @cohort =="november" || @cohort =="december" || @cohort ==""
+    puts "Cohort invalid; please enter a month and check that the spelling is correct"
+    @cohort = STDIN.gets.strip.downcase
+  end
+end  
 
 def interactive_menu
   loop do
