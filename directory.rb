@@ -1,3 +1,4 @@
+require 'csv'
 @students = []
 
 def input_students
@@ -101,12 +102,11 @@ end
 def save_students
   puts "Enter the file you would like to save to:"
   file_given = STDIN.gets.chomp
-  File.open(file_given, "w") do |file|
+  CSV.open(file_given, "w") do |csv|
     @students.each do |student|
-      student_data = [student[:name], student[:cohort]]
-      csv_line = student_data.join(",")
-      file.puts csv_line
+      @student_data = [student[:name], student[:cohort]]
     end  
+    csv << @student_data
   end
   
 end  
