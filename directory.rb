@@ -101,24 +101,25 @@ end
 def save_students
   puts "Enter the file you would like to save to:"
   file_given = STDIN.gets.chomp
-  file = File.open(file_given, "w")
-  @students.each do |student|
-    student_data = [student[:name], student[:cohort]]
-    csv_line = student_data.join(",")
-    file.puts csv_line
+  File.open(file_given, "w") do |file|
+    @students.each do |student|
+      student_data = [student[:name], student[:cohort]]
+      csv_line = student_data.join(",")
+      file.puts csv_line
+    end  
   end
-  file.close
+  
 end  
 
 def load_students
   puts "Enter the file you would like to load from"
   file_given = STDIN.gets.chomp 
-  file = File.open(file_given, "r")
-  file.readlines.each do |line|
-    @name, @cohort = line.chomp.split(",")
-    add_students
-  end 
-  file.close
+  File.open(file_given, "r") do |file|
+    file.readlines.each do |line|
+      @name, @cohort = line.chomp.split(",")
+      add_students
+    end 
+  end
 end
 
 def try_load_students
